@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Music+</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="google-header-bar">
+  <div class="header content clearfix">
+    <img class="logo" src="//ssl.gstatic.com/images/logos/google_logo_41.png" alt="Google">
+    <span id="signinButton" class="signup-button">
+      <span
+        class="g-signin"
+        data-callback="signinCallback"
+        data-clientid="700214795196.apps.googleusercontent.com"
+        data-cookiepolicy="single_host_origin"
+        data-scope="https://www.googleapis.com/auth/plus.login">
+      </span>
+
+      <%= form_tag(:controller => "users", :action => "new", :method => "post") do %>
+        <div class="is-this-you"></div>
+        <%= hidden_field_tag :fullname %>
+        <%= hidden_field_tag :gplus %>
+      <% end %>
+    </span>
+  </div>
+</div>
+
+<%= yield %>
+
+</body>
+</html>

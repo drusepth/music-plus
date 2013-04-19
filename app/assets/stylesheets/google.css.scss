@@ -1,0 +1,32 @@
+.google-header-bar {
+  height: 71px;
+  background: #f1f1f1;
+  border-bottom: 1px solid #e5e5e5;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+  .header {
+    .logo {
+      margin: 17px 0 0;
+      float: left;
+    }
+
+    .signup-button {
+      margin: 22px 0 0;
+      float: right;
+    }
+  }
+
+  .content {
+    padding: 0 44px;
+  }
+
+  .clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: '.';
+    clear: both;
+    height: 0;
+  }
+}
