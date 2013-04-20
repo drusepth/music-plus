@@ -1,9 +1,22 @@
 $(document).ready(function () {
 
+  // Check for search query
+  var query = window.location.search.replace( "?", "" );
+  if (query.length > 0 && query.indexOf('=') > -1) {
+    query = query.split("=")[1];
+    if (query) {
+      $('#search-box').val(query);
+    }
+  }
+
   // Wait for the Google API to load before working with it
   waitForGAPI(200, function () {
     authGAPI('AIzaSyAME2fVyr6qZf0F37fnBfeSweSe7k8yIaM');
-    loadMusic('#music');
+    if (query) {
+      loadMusic(query);
+    } else {
+      loadMusic('music');
+    }
   });
 
   function waitForGAPI(delay, callback) {
@@ -26,7 +39,7 @@ $(document).ready(function () {
     // Load the API
     gapi.client.load('plus', 'v1', function() {
       var request = gapi.client.plus.activities.search({
-        'query'     : 'music',
+        'query'     : query,
         'orderBy'   : 'best',
         'maxResults': '20'
       });
@@ -53,6 +66,7 @@ $(document).ready(function () {
               .attr('height', '200')
               .attr('video-code', video_code)
               .click(function() {
+                // Lazy-evaluate the building of this song's YouTube video
                 var this_video_code = $(this).attr('video-code');
 
                 var real_video = $('<iframe />')

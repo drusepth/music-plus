@@ -11,7 +11,20 @@
 
 <div class="google-header-bar">
   <div class="header content clearfix">
-    <img class="logo" src="//ssl.gstatic.com/s2/oz/images/google-logo-plus-0fbe8f0119f4a902429a5991af5db563.png" alt="Google">
+    <a href="/">
+      <img class="logo" src="//ssl.gstatic.com/s2/oz/images/google-logo-plus-0fbe8f0119f4a902429a5991af5db563.png" alt="Google">
+    </a>
+
+    <form id="search-box-container">
+      <input id="search-box" name="q" type="text" autocomplete="off" value="" spellcheck="false" placeholder="Search for more videos...">
+
+      <div id="search-button-container" style="">
+        <button type="submit" id="search-button" aria-label="Google Search" class="button">
+          <span class="magnifying-glass"></span>
+        </button>
+      </div>
+    </form>
+
     <span id="signinButton" class="signup-button">
       <span
         class="g-signin"
