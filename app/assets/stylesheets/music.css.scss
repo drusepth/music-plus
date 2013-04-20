@@ -17,9 +17,21 @@ html {
   .wrapper {
     height: 225px;
     width: 300px;
+    color: white;
 
     float: left;
 
     background: #000;
+
+    margin: 20px;
+
+    .video-label {
+      position: relative;
+      top: -225px;
+
+      padding: 5px;
+      background: #000;
+      opacity: 0.9;
+    }
   }
 }

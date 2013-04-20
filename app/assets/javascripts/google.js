@@ -97,20 +97,43 @@ $(document).ready(function () {
               });
 
             // Build wrapper
-            var wrapper = $('<div />').attr('class', 'wrapper');
+            var wrapper = $('<div />')
+              .attr('class', 'wrapper');
 
+            var label = $('<div />')
+              .attr('class', 'video-label')
+              .attr('video-code', video_code)
+              .text('');
+
+            // Add image/video to wrapper
             static_img.appendTo(wrapper);
+            label.appendTo(wrapper);
 
-            wrapper.appendTo(results);
+            wrapper
+              .hide()
+              .appendTo(results)
+              .fadeIn('slow');
 
           }
          
         }
+
+        $.each($('div.video-label'), function (key, value) {
+          var this_video_code = $(value).attr('video-code');
+
+          $.getJSON('https://gdata.youtube.com/feeds/api/videos/' + this_video_code + '?v=1&alt=json', function(data) {
+            $('.video-label[video-code=' + this_video_code + ']')
+              .hide()
+              .text(data.entry.title.$t)
+              .fadeIn('fast');
+          });
+        });
+  
       });
     });
   }
 });
 
 function signinCallback() {
-  
+
 }
