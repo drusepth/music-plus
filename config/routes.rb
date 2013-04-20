@@ -1,5 +1,5 @@
 MusicPlus::Application.routes.draw do
   resources :users
 
-  root :to => 'users#login'
+  root :to => 'main#discover'
 end
