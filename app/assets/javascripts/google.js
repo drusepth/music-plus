@@ -60,10 +60,14 @@ $(document).ready(function () {
 
             var video_code = attachments[0].url.split("v=")[1];
 
+            if (video_code.indexOf('&') > -1) {
+              video_code = video_code.split('&')[0];
+            }
+
             var static_img = $('<img />')
               .attr('src', 'http://img.youtube.com/vi/' + video_code + '/0.jpg')
               .attr('width', '300')
-              .attr('height', '200')
+              .attr('height', '225')
               .attr('video-code', video_code)
               .click(function() {
                 // Lazy-evaluate the building of this song's YouTube video
@@ -81,6 +85,15 @@ $(document).ready(function () {
                 real_video.hide();
                 real_video.appendTo($(this).parent());
                 real_video.fadeIn();
+              })
+              .mouseover(function () {
+                $(this).fadeTo('fast', 0.6);
+              })
+              .mouseout(function () {
+                var opacity = Math.round($(this).css('opacity') * 10) / 10;
+                if (opacity >= 0.6 && !$(this).is(":hidden")) {
+                  $(this).fadeTo('fast', 1.0);
+                }
               });
 
             // Build wrapper
@@ -97,3 +110,7 @@ $(document).ready(function () {
     });
   }
 });
+
+function signinCallback() {
+  
+}

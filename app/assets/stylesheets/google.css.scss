@@ -12,12 +12,14 @@
     }
 
     .signup-button {
-      margin: 22px 0 0;
+      margin: 19px 0 0;
       float: right;
     }
   }
 
   #search-box-container {
+    display: inline-block;
+
     #search-box {
       margin: 19px 0 0 19px;
       outline: none;
