@@ -8,15 +8,23 @@ $(document).ready(function () {
       $('#search-box').val(unescape(query));
     }
   }
+  if (!query) {
+    query = 'music';
+  }
+  $('#query').text(query);
+
+  // Provide suggestions when search box is focused
+  $('#search-box').focus(function () {
+    //$('#search-box-container > .search-tip').fadeIn('show');
+  }).focusout(function (){
+    //$('#search-box-container > .search-tip').fadeOut();
+  });
 
   // Wait for the Google API to load before working with it
   waitForGAPI(200, function () {
     authGAPI('AIzaSyAME2fVyr6qZf0F37fnBfeSweSe7k8yIaM');
-    if (query) {
-      loadMusic(query);
-    } else {
-      loadMusic('music');
-    }
+
+    loadMusic(query, undefined, 5);
   });
 
   function waitForGAPI(delay, callback) {
@@ -35,16 +43,23 @@ $(document).ready(function () {
     gapi.client.setApiKey('AIzaSyAME2fVyr6qZf0F37fnBfeSweSe7k8yIaM');
   }
 
-  function loadMusic(query) {
+  function loadMusic(query, page_token, limiter) {
+    var next_page_token;
+
     // Load the API
     gapi.client.load('plus', 'v1', function() {
       var request = gapi.client.plus.activities.search({
         'query'     : query,
         'orderBy'   : 'best',
-        'maxResults': '20'
+        'maxResults': '20',
+        'pageToken' : (page_token ? page_token : '')
       });
       
       request.execute(function(resp) {
+        next_page_token = resp.nextPageToken;
+        console.log("Got it");
+        console.log(next_page_token);
+
         if (!resp.items) {
           $('#discover-results').text('No results found. Try something else!');
           return;
@@ -53,7 +68,6 @@ $(document).ready(function () {
         var numItems = resp.items.length;
 
         var results = $('#discover-results');
-        results.html('');
 
         for (var i = 1; i < numItems - 1; i++) {
           var attachments = resp.items[i].object.attachments;
@@ -129,11 +143,18 @@ $(document).ready(function () {
 
           $.getJSON('https://gdata.youtube.com/feeds/api/videos/' + this_video_code + '?v=1&alt=json', function(data) {
             $('.video-label[video-code=' + this_video_code + ']')
-              .hide()
               .text(data.entry.title.$t)
               .fadeIn('fast');
           });
         });
+
+        if (limiter == 0) {
+          return;
+        } else {
+          limiter--;
+
+          loadMusic(query, next_page_token, limiter);
+        }
   
       });
     });

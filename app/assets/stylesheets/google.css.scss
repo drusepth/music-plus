@@ -76,6 +76,17 @@
         }
       }
     }
+
+    .search-tip {
+      font: 12px Arial;
+      color: #777;
+
+      position: relative;
+      top: 10px;
+      left: 5px;
+
+      /* display: none; */
+    }
   }
 
   .content {

@@ -11,8 +11,16 @@ html {
   direction: ltr;
 }
 
+.title {
+  margin: 0 40px;
+}
+
 .container {
   margin: 0 20px;
+
+  .unpad {
+    margin: 20px;
+  }
 
   .wrapper {
     height: 225px;
@@ -34,6 +42,8 @@ html {
       padding: 5px;
       background: #000;
       opacity: 0.9;
+
+      display: none;
     }
   }
 }
