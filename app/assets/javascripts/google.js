@@ -2,10 +2,10 @@ $(document).ready(function () {
 
   // Check for search query
   var query = window.location.search.replace( "?", "" );
-  if (query.length > 0 && query.indexOf('=') > -1) {
+  if (query && query.length > 0 && query.indexOf('=') > -1) {
     query = query.split("=")[1];
     if (query) {
-      $('#search-box').val(query);
+      $('#search-box').val(unescape(query));
     }
   }
 
@@ -45,6 +45,11 @@ $(document).ready(function () {
       });
       
       request.execute(function(resp) {
+        if (!resp.items) {
+          $('#discover-results').text('No results found. Try something else!');
+          return;
+        }
+
         var numItems = resp.items.length;
 
         var results = $('#discover-results');
@@ -60,7 +65,7 @@ $(document).ready(function () {
 
             var video_code = attachments[0].url.split("v=")[1];
 
-            if (video_code.indexOf('&') > -1) {
+            if (video_code && video_code.indexOf('&') > -1) {
               video_code = video_code.split('&')[0];
             }
 
@@ -80,7 +85,8 @@ $(document).ready(function () {
                   .attr('allowfullscreen', 'allowfullscreen')
                   .attr('src', 'http://www.youtube.com/embed/' + this_video_code);
 
-                $(this).css('display', 'none');
+                $(this).hide();
+                $(this).parent().find('.video-label').hide();
 
                 real_video.hide();
                 real_video.appendTo($(this).parent());
